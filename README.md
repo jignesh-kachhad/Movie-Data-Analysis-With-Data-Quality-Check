@@ -13,11 +13,13 @@ This project is an ETL (Extract, Transform, Load) pipeline for processing movie 
 
 ## Project Overview
 This ETL pipeline processes movie data by:
-1. Extracting data from an S3 bucket.
-2. Evaluating data quality.
-3. Transforming the data format.
-4. Loading the data into an AWS Glue Data Catalog table and Amazon Redshift.
-5. Using EventBridge and Step Functions for orchestration and monitoring.
+- Automates Data Processing: The pipeline automates the entire data processing workflow, reducing manual intervention and ensuring consistent data delivery.
+- Data Quality Checks: Glue jobs within the pipeline incorporate data quality checks to identify and handle potential issues in the movie data, like missing values or invalid entries.
+- Schema Discovery & Management: AWS Glue crawlers discover and manage the schema of movie data in S3 and Redshift, ensuring the pipeline works with the latest schema information.
+- Efficient Workflow Orchestration: AWS Step Functions orchestrates the workflow between different stages of the data pipeline (data extraction, transformation, loading) for efficient execution.
+- Proactive Monitoring & Notifications: AWS SNS topics provide notifications about the success or failure of the Glue job, enabling proactive monitoring and maintenance of the data pipeline.
+
+![Architecture Diagram](https://github.com/jignesh-kachhad/Movie-Data-Analysis-With-Data-Quality-Check/blob/main/Architecture.png).
 
 ## Components
 ### Amazon S3
