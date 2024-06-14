@@ -141,7 +141,7 @@ glue_ctx.write_dynamic_frame.from_options(
     frame=rule_outcomes_dyf,
     connection_type="s3",
     format="json",
-    connection_options={"path": "s3://movies-gds1/rule_outcome_from_etl/", "partitionKeys": []},
+    connection_options={"path": "s3://raw-movies-data/rule_outcome_from_etl/", "partitionKeys": []},
     transformation_ctx="rule_outcomes_s3",
 )
 
@@ -150,7 +150,7 @@ glue_ctx.write_dynamic_frame.from_options(
     frame=failed_records_dyf,
     connection_type="s3",
     format="json",
-    connection_options={"path": "s3://movies-gds1/bad_records/", "partitionKeys": []},
+    connection_options={"path": "s3://raw-movies-data/bad_records/", "partitionKeys": []},
     transformation_ctx="failed_records_s3",
 )
 

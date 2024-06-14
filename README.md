@@ -1,4 +1,4 @@
-# Movie Data ETL Pipeline
+# Movie Data Analysis With Data Quality Check
 
 This project is an ETL (Extract, Transform, Load) pipeline for processing movie data using AWS Glue, Amazon S3, and Amazon EventBridge. It automates data ingestion, quality evaluation, transformation, and loading into Amazon Redshift, ensuring data quality and providing mechanisms for error handling and notifications.
 
@@ -12,7 +12,7 @@ This project is an ETL (Extract, Transform, Load) pipeline for processing movie 
 - [License](#license)
 
 ## Project Overview
-This ETL pipeline processes movie data by:
+
 - Automates Data Processing: The pipeline automates the entire data processing workflow, reducing manual intervention and ensuring consistent data delivery.
 - Data Quality Checks: Glue jobs within the pipeline incorporate data quality checks to identify and handle potential issues in the movie data, like missing values or invalid entries.
 - Schema Discovery & Management: AWS Glue crawlers discover and manage the schema of movie data in S3 and Redshift, ensuring the pipeline works with the latest schema information.
@@ -23,7 +23,7 @@ This ETL pipeline processes movie data by:
 
 ## Components
 ### Amazon S3
-- `movies-gds1` bucket with the following folders:
+- `raw-movies-data` bucket with the following folders:
   - `bad_records/`
   - `historical_DQ_outcome/`
   - `input_data/`
@@ -67,14 +67,14 @@ This ETL pipeline processes movie data by:
 
 ## Setup Instructions
 1. **AWS Setup**:
-   - Create an S3 bucket named `movies-gds1` with the required folders.
+   - Create an S3 bucket named `raw-movies-data` with the required folders.
    - Configure AWS Glue Crawlers and Jobs.
    - Set up EventBridge rules and Step Functions.
 
 2. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/movie-data-etl-pipeline.git
-   cd movie-data-etl-pipeline
+   git clone https://github.com/yourusername/Movie-Data-Analysis-With-Data-Quality-Check.git
+   cd Movie-Data-Analysis-With-Data-Quality-Check
    ```
 
 3. **AWS Configuration**:
