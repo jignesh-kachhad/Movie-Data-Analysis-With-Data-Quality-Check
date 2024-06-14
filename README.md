@@ -42,7 +42,7 @@ This ETL pipeline processes movie data by:
   5. Loads transformed data into Glue Data Catalog.
 
 ### Amazon EventBridge
-- Rule: `movies-data-pipeline`
+- Rule: `movies-data-pipeline`, `movie-data-quality`
 
 ### Step Functions
 - Orchestrates the workflow:
