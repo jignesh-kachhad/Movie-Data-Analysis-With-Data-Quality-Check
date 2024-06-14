@@ -18,6 +18,8 @@ This ETL pipeline processes movie data by:
 3. Transforming the data format.
 4. Loading the data into an AWS Glue Data Catalog table and Amazon Redshift.
 5. Using EventBridge and Step Functions for orchestration and monitoring.
+   
+![Architecture Diagram](https://github.com/jignesh-kachhad/Movie-Data-Analysis-With-Data-Quality-Check/blob/main/Architecture.png)
 
 ## Components
 ### Amazon S3
