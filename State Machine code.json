@@ -1,0 +1,68 @@
+{
+    "Comment": "A description of my state machine",
+    "StartAt": "StartCrawler",
+    "States": {
+        "StartCrawler": {
+            "Type": "Task",
+            "Parameters": {"Name": "crawl_movies_data_in_s3"},
+            "Resource": "arn:aws:states:::aws-sdk:glue:startCrawler",
+            "Next": "GetCrawler"
+        },
+        "GetCrawler": {
+            "Type": "Task",
+            "Parameters": {"Name": "crawl_movies_data_in_s3"},
+            "Resource": "arn:aws:states:::aws-sdk:glue:getCrawler",
+            "Next": "Is_Running?"
+        },
+        "Is_Running?": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.Crawler.State",
+                    "StringMatches": "RUNNING",
+                    "Next": "Wait"
+                }
+            ],
+            "Default": "Glue StartJobRun"
+        },
+        "Wait": {"Type": "Wait", "Seconds": 3, "Next": "GetCrawler"},
+        "Glue StartJobRun": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::glue:startJobRun.sync",
+            "Parameters": {"JobName": "movie_data_analysis"},
+            "Catch": [
+                {"ErrorEquals": ["States.TaskFailed"], "Next": "Failed_Notification"}
+            ],
+            "Next": "Glue_Job_Status"
+        },
+        "Glue_Job_Status": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.JobRunState",
+                    "StringMatches": "SUCCEEDED",
+                    "Next": "Success_Notification"
+                }
+            ],
+            "Default": "Failed_Notification"
+        },
+        "Failed_Notification": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sns:publish",
+            "Parameters": {
+                "Message.$": "$",
+                "TopicArn": "arn:aws:sns:ap-south-1:126362963275:s3-arrival-notification"
+            },
+            "End": true
+        },
+        "Success_Notification": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sns:publish",
+            "Parameters": {
+                "TopicArn": "arn:aws:sns:ap-south-1:126362963275:s3-arrival-notification",
+                "Message": "Glue job Execution Successful !!"
+            },
+            "End": true
+        }
+    }
+}
