@@ -23,6 +23,7 @@ This project is an ETL (Extract, Transform, Load) pipeline for processing movie 
 
 ## Components
 ### Amazon S3
+- Stores the raw movie data in a bucket.
 - `raw-movies-data` bucket with the following folders:
   - `bad_records/`
   - `historical_DQ_outcome/`
@@ -30,22 +31,24 @@ This project is an ETL (Extract, Transform, Load) pipeline for processing movie 
   - `rule_outcome_from_etl/`
 
 ### AWS Glue Crawlers
+- Discover and manage the schema of movie data in S3 and Redshift.
 - `crawl_movies_data_in_s3`
 - `crawl_movies_data_in_redshift`
 
 ### AWS Glue Jobs
 - Glue job script that:
-  1. Reads data from S3.
-  2. Evaluates data quality.
-  3. Transforms data format.
-  4. Writes evaluation outcomes and failed records to S3.
-  5. Loads transformed data into Glue Data Catalog.
+  1. Extracts movie data from S3.
+  2. Applies data quality checks to ensure data integrity.
+  3. Transforms the data as needed (e.g., converting data types).
 
 ### Amazon EventBridge
 - Rule: `movies-data-pipeline`, `movie-data-quality`
 
+### Amazon Redshift: 
+- Stores the processed movie data for further analysis (e.g., tables, views).
+
 ### Step Functions
-- Orchestrates the workflow:
+- Orchestrates the entire data processing workflow, ensuring each stage executes in the correct order.
   1. Starts the S3 crawler.
   2. Monitors crawler state.
   3. Starts the Glue job.
